@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <!-- Load jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
+    <!-- Load Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+
+    <!-- Load PapaParse to read csv files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script> 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+    <script src="script.js"></script>
+
+
+    <style type="text/css">
+    .chartBox{
+      font-family: Helvetica ;
+
+      width: 100%;
+      /* padding:2%       */ 
+    }
+    </style>
+
+
+  <style type="text/css">
+  .selectbox{
+    font-family: Helvetica;
+    padding:2%
+  }
+  </style>
+
+<style type="text/css">
+  .linkbox{
+    font-family: Helvetica;
+  }
+  </style>
+
+<style type="text/css">
+  .textBox{
+    font-family: Helvetica;
+    font-size: 20px;
+    padding:2%
+  }
+  </style>
+
+<style type="text/css">
+  .container2{
+    font-family: Helvetica;
+    font-size: 15px;
+    margin-left:2%;
+    padding:0%
+  }
+  </style>
+
+<style type="text/css">
+  .panel-body{
+    font-family: Helvetica;
+    font-size: 15px;
+    margin-left:2%;
+    margin-right:2%;
+  }
+  </style>
+
+<style type="text/css">
+  .textBoxheading{
+    font-family: Helvetica;
+    font-size: 35px;
+    margin-left:36%;
+    margin-right:2%;
+  }
+  </style>
+  <style type="text/css">
+  .center {
+  text-align: center;
+}
+  </style>
+</head>
+  <body>
+
+    <div class="textBoxheading">
+      <b>News Bias Visualisor</b>
+    </div>
+
+    <div class="textBox" >
+      <b>Instructions:</b> 
+      <br>
+        1) Search for a news topic and click 'Submit'. (Please select <b>one</b> topic only).
+      <br>
+        2) To hide articles, click a publisher in the key. 
+      </div>
+    
+      <img src="key.jpg" alt="key" width="500">
+      
+      <div class="textBox" >
+        3) To see headlines, hover over an article. 
+     </div>
+      <img src="hover.jpg" alt="key" width="500" >
+      <div class="textBox" >
+        4) Links are available in the side bar. 
+           Note: these are not available for all articles.  
+      <br>
+      <br>
+      <b>Interpretation:</b> 
+      
+      The <b>closer</b> articles are to eachother, the <b>more similar</b> their reporting. 
+      </div>
+
+      <div class="center">
+        <img src="visu.jpg" alt="vis" width="700" >
+      </div>
+
+    <div class="container2">
+        <h3 class="panel-title">News Topics</h3>
+    </div>
+
+    <div class="panel-body">
+      <form role="form" id="contacts">
+        <div>
+        <select id="select-name" placeholder="Select a news topic..." multiple>
+          </select>
+        </div>
+          <input type="submit" value="Submit" class="btn btn-info btn-block">
+      </form>
+    </div>
+
+    <!-- <div class="panel-body">
+      <form role="form" id="contacts">
+        <select id="select-name" placeholder="Select a news topic..." multiple>
+          </select>
+          <input type="submit" value="Submit" class="btn btn-info btn-block">
+      </form>
+    </div> -->
+
+  <div style="float:left;width: 700px; margin-left:300px">
+      <canvas id="container" height = 300px width = 300px ;></canvas>
+    </div>
+
+
+    <div class="linkbox" id="target" style="width: 300px; float:left; height:100px;  margin-left:75px; margin-top: 20px;">
+    </div>
+
+ </body>
+</html>
