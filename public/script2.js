@@ -100,7 +100,10 @@ $('#contacts').submit(function(e){
                   }}
                 })
               }
-    
+    // console.log(pubs)
+    var colourlist = {}
+   
+
     for (i=0; i<pubs.length; i++) {
         datasetdata[i] = {
               // label:"Test " + i,
@@ -113,9 +116,12 @@ $('#contacts').submit(function(e){
               pointRadius: 15,
               fill: false,
               pointHoverRadius: 20
-
         }
+        colourlist[publishers[i]] = colors[i];
+        // colourlist.publishers[i] = colors[i];
       }
+
+
 
     var scatterdata = {
       datasets: datasetdata}
@@ -222,21 +228,22 @@ $('#contacts').submit(function(e){
   $('#target').empty().append('<p style="color:grey; font-size:20px"><b>Article Links:<b></p>')
 
   for (i = 0; i< urls_list.length-1; i++) {
-
       var myobj=  urls_list[i];
-    
       myobj = myobj.replace(/\/$/, "");
-
-
-
       var myheadline=  titleCase(head_list[i])
-    //   $('#target').append(myobj+"<br>"+"<br>")
-    //   console.log(typeof myobj)
+    //   var pubcolour = datasetdata[i].backgroundColor
+    //   console.log(pubcolour)
+    //   #ffffa0
+    // colourlist 
+    var pubcolour = colourlist[publishers_list[i]]
+    console.log(pubcolour)
+    console.log(publishers_list[i])
+    // $('#target').append('<a  href='+myobj+ ' style="color:pubcolour">'+myheadline+' </a>'+"<br>"+"<br>")
+    // $('#target').append('<a  href='+myobj+ ' style="background-color:pubcolour">'+myheadline+' </a>'+"<br>"+"<br>")
+    $('#target').append('<a  href='+myobj+ ' style="color:'+pubcolour+'">'+myheadline+' </a>'+"<br>"+"<br>")
+    // $('#target').append('<a  href='+myobj+ ' style="background-color:'+pubcolour+'">'+myheadline+' </a>'+"<br>"+"<br>")
 
-    $('#target').append('<a  href='+myobj+'>'+myobj+'</a>'+"<br>"+"<br>")
-    //   $('#target').append('<a  href='+myobj+'>'+myheadline+'</a>'+"<br>"+"<br>")
-
-  }    
+}    
 
 } 
 
