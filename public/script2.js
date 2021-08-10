@@ -21,7 +21,7 @@ $(document).ready(function() {
   var Y_AXIS = ''; // y-axis label, label in tooltip
 
   var SHOW_GRID = false; // `true` to show the grid, `false` to hide
-
+//   let counter = 1;
 $.get("event_names.csv", {'_': $.now()}, function(csvString) {
   const titles_pre = Papa.parse(csvString, {header: false, delimiter: '&&&&'}).data;
   const titles = String(titles_pre).split("&&&&")
@@ -67,18 +67,12 @@ $('#contacts').submit(function(e){
   var SHOW_GRID = true; // `true` to show the grid, `false` to hide
   var lengthofstring =  JSON.stringify($('#select-name').val()).length
   var csv_ref = JSON.stringify($('#select-name').val()).substr(2, lengthofstring-4)
+//   let counter = 1;
   $.get(csv_ref, {'_': $.now()}, function(csvString) {
 
+    $('#container').remove();
+    jQuery('#results'). append('<canvas id="container" height="300" width="300"> </canvas>') ; 
 
-    var resetCanvas = function(){
-      console.log(19)
-      $('container').remove(); 
-      $('graph-container').append('<canvas id="container"><canvas>');
-      canvas = document.querySelector('container');
-    };
-
-    resetCanvas()
-   
     var rows = Papa.parse(csvString, {header: true}).data;
     var colors = [ '#2685CB', '#4AD95A', '#FEC81B', '#FD8D14', '#CE00E6', '#4B4AD3', '#FC3026', '#B8CCE3', '#6ADC88', '#FEE45F'  ];
     var datasetdata = []
@@ -126,9 +120,12 @@ $('#contacts').submit(function(e){
     var scatterdata = {
       datasets: datasetdata}
 
+    // var ctx = document.getElementById('container').getContext('2d');
     var ctx = document.getElementById('container').getContext('2d');
+
     
-    Chart.Scatter(ctx, {
+    
+    var mychart = new Chart.Scatter(ctx, {
 
       data: 
         scatterdata
@@ -206,6 +203,9 @@ $('#contacts').submit(function(e){
 
     });
 
+    mychart.render()
+    // mychart.destroy()
+
     function titleCase(str) {
       str = str.toLowerCase();
       str = str.split(' ');
@@ -218,16 +218,29 @@ $('#contacts').submit(function(e){
 
 
   var parsed = "Article URLS:"+"\n";
+
   $('#target').empty().append('<p style="color:grey; font-size:20px"><b>Article Links:<b></p>')
 
   for (i = 0; i< urls_list.length-1; i++) {
 
       var myobj=  urls_list[i];
+    
+      myobj = myobj.replace(/\/$/, "");
+
+
+
       var myheadline=  titleCase(head_list[i])
-      $('#target').append('<a  href='+myobj+'>'+myheadline+'</a>'+"<br>"+"<br>")
+    //   $('#target').append(myobj+"<br>"+"<br>")
+    //   console.log(typeof myobj)
+
+    $('#target').append('<a  href='+myobj+'>'+myobj+'</a>'+"<br>"+"<br>")
+    //   $('#target').append('<a  href='+myobj+'>'+myheadline+'</a>'+"<br>"+"<br>")
+
   }    
 
-  }
+} 
+
+  
   );
   
   })
