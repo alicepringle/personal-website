@@ -78,8 +78,13 @@ $('#contacts').submit(function(e){
     // list of publishers 
     var publishers_list = []
     for (i=0; i<rows.length-2; i++) {
-      publishers_list[i] = rows[i][POINT_NAME]
+      var temp = rows[i][POINT_NAME]
+      if (temp == 'theguardian'){
+          var temp = 'the guardian'}
+      publishers_list[i] = titleCase(temp)
+      
       }
+    console.log(publishers_list)
     var urls_list = []
     var head_list = []
     for (i=0; i<rows.length-1; i++) {
@@ -89,16 +94,29 @@ $('#contacts').submit(function(e){
     var publishers = [...new Set(publishers_list)]
     for (i=0; i<publishers.length; i++) {
                 pubs[i] = rows.map(function(row) {
-              
-                  if(row[POINT_NAME] == publishers[i]){
+                
+                var pub_filler = row[POINT_NAME]
+
+                
+                if (pub_filler == undefined) {
+                    var pub_filler = 'filler'
+                    console.log(titleCase(pub_filler))
+
+                }
+
+                if (pub_filler == 'theguardian'){
+                    var pub_filler = 'the guardian'}
+
+
+
+                  if(titleCase(pub_filler) == publishers[i]){
                   return {
                     x: row[POINT_X],
                     y: row[POINT_Y],
-                    name: row[POINT_HEAD]
+                    name: titleCase(row[POINT_HEAD])
                   }}
                 })
               }
-    // console.log(pubs)
     var colourlist = {}
    
     for (i=0; i<pubs.length; i++) {
