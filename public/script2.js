@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-  var TITLE = 'Income and Test Scores in Connecticut School Districts, 2009-13';
-
   var POINT_X = 'income'; // column name for x values in data.csv
   var POINT_X_PREFIX = ''; // prefix for x values, eg '$'
   var POINT_X_POSTFIX = ''; // postfix for x values, eg '%'
@@ -21,8 +19,8 @@ $(document).ready(function() {
   var Y_AXIS = ''; // y-axis label, label in tooltip
 
   var SHOW_GRID = false; // `true` to show the grid, `false` to hide
-//   let counter = 1;
-$.get("event_names.csv", {'_': $.now()}, function(csvString) {
+
+  $.get("event_names.csv", {'_': $.now()}, function(csvString) {
   const titles_pre = Papa.parse(csvString, {header: false, delimiter: '&&&&'}).data;
   const titles = String(titles_pre).split("&&&&")
 
@@ -31,8 +29,6 @@ $.get("event_names.csv", {'_': $.now()}, function(csvString) {
     filenames[i] = "./data"+String(i)+".csv"
   }
   
-
-
 function selectOne() {
       var select = document.getElementById('select-name');
       for (var i=0; i<filenames.length; i++) {
@@ -49,29 +45,31 @@ $('#contacts').submit(function(e){
   e.preventDefault();
   var TITLE = 'Income and Test Scores in Connecticut School Districts, 2009-13';
 
-  var POINT_X = 'income'; // column name for x values in data.csv
-  var POINT_X_PREFIX = ''; // prefix for x values, eg '$'
-  var POINT_X_POSTFIX = ''; // postfix for x values, eg '%'
+  //   var POINT_X = 'income'; // column name for x values in data.csv
 
-  var POINT_Y = 'grades'; // column name for y values in data.csv
-  var POINT_Y_PREFIX = ''; // prefix for x values, eg 'USD '
-  var POINT_Y_POSTFIX = ''; // postfix for x values, eg ' kg'
+//   var POINT_X_PREFIX = ''; // prefix for x values, eg '$'
+//   var POINT_X_POSTFIX = ''; // postfix for x values, eg '%'
 
-  var POINT_NAME = 'district'; // point names that appear in tooltip
-  var POINT_COLOR = 'rgba(0,0,255,0.7)'; // eg `black` or `rgba(10,100,44,0.8)`
-  var POINT_RADIUS = 25; // radius of each data point
+//   var POINT_Y = 'grades'; // column name for y values in data.csv
+//   var POINT_Y_PREFIX = ''; // prefix for x values, eg 'USD '
+//   var POINT_Y_POSTFIX = ''; // postfix for x values, eg ' kg'
 
-  var X_AXIS = ''; // x-axis label, label in tooltip
-  var Y_AXIS = ''; // y-axis label, label in tooltip
+//   var POINT_NAME = 'district'; // point names that appear in tooltip
+//   var POINT_COLOR = 'rgba(0,0,255,0.7)'; // eg `black` or `rgba(10,100,44,0.8)`
+//   var POINT_RADIUS = 25; // radius of each data point
 
-  var SHOW_GRID = true; // `true` to show the grid, `false` to hide
+//   var X_AXIS = ''; // x-axis label, label in tooltip
+//   var Y_AXIS = ''; // y-axis label, label in tooltip
+
+//   var SHOW_GRID = true; // `true` to show the grid, `false` to hide
+  
   var lengthofstring =  JSON.stringify($('#select-name').val()).length
   var csv_ref = JSON.stringify($('#select-name').val()).substr(2, lengthofstring-4)
-//   let counter = 1;
   $.get(csv_ref, {'_': $.now()}, function(csvString) {
 
     $('#container').remove();
-    jQuery('#results'). append('<canvas id="container" height="300" width="300"> </canvas>') ; 
+    jQuery('#results'). append('<canvas id="container" height="240" width="300"> </canvas>') ; 
+    // style="border: 1px solid black;"
 
     var rows = Papa.parse(csvString, {header: true}).data;
     var colors = [ '#2685CB', '#4AD95A', '#FEC81B', '#FD8D14', '#CE00E6', '#4B4AD3', '#FC3026', '#B8CCE3', '#6ADC88', '#FEE45F'  ];
@@ -103,7 +101,6 @@ $('#contacts').submit(function(e){
     // console.log(pubs)
     var colourlist = {}
    
-
     for (i=0; i<pubs.length; i++) {
         datasetdata[i] = {
               // label:"Test " + i,
@@ -121,74 +118,101 @@ $('#contacts').submit(function(e){
         // colourlist.publishers[i] = colors[i];
       }
 
-
-
     var scatterdata = {
       datasets: datasetdata}
-
-    // var ctx = document.getElementById('container').getContext('2d');
     var ctx = document.getElementById('container').getContext('2d');
 
-    
-    
     var mychart = new Chart.Scatter(ctx, {
-
-      data: 
-        scatterdata
-      ,
+      data: scatterdata,
       options: {
-
         title: {
-          display: SHOW_GRID,
-          text: rows[rows.length-2][POINT_NAME],
-          fontSize: 20,
+          display: false,
+        //   text: rows[rows.length-2][POINT_NAME],
+          fontSize: 20
         },
         legend: {
+        position: 'right',
           display: true,
           labels:{fontSize:15}
           
         },
-        scales: {
-          xAxes: [{
-            scaleLabel: {
-              display: false,
-              labelString: X_AXIS
-            },
+    //     scales: {
+    //   xAxes: [{
 
-            gridLines: {
-              display: false,
-              drawBorder: true,
-              lineWidth: 5
+    //     scaleLabel: {
+    //       display: false,
+    //       labelString: X_AXIS
+    //     },
+    //     gridLines: {
+    //       display: false,
+    //       drawBorder: true,
+    //       lineWidth: 5
+    //     },
+    //     ticks: {
+    //       callback: function(value, index, values) {
+    //         // return POINT_X_PREFIX + value.toLocaleString() + POINT_X_POSTFIX;
+    //         return ;
+    //       }
+    //     }
+    //   }],
+    //   yAxes: [{
+    //     scaleLabel: {
+    //       display: true,
+    //       labelString: Y_AXIS
+    //     },
+    //     gridLines: {
+    //       display: true,
+    //       drawBorder: true,
+    //       lineWidth: 5
+    //     }
+    //     ticks: {
+    //       callback: function(value, index, values) {
+    //         // return POINT_Y_PREFIX + value.toLocaleString() + POINT_Y_POSTFIX;
+    //         return ;
+    //       }
+    //     }
+                
+    //   }]
+    //     },
+    scales: {
+        xAxes: [{
+          scaleLabel: {
+            display: false,
+            labelString: X_AXIS
+          },
 
-            },
-            ticks: {
-              callback: function(value, index, values) {
-                // return POINT_X_PREFIX + value.toLocaleString() + POINT_X_POSTFIX;
-                return ;
-              }
+          gridLines: {
+            display: true,
+            drawBorder: true,
+            lineWidth: 0
+
+          },
+          ticks: {
+            callback: function(value, index, values) {
+              // return POINT_X_PREFIX + value.toLocaleString() + POINT_X_POSTFIX;
+              return ;
             }
-          }],
-          yAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: Y_AXIS
-            },
-            gridLines: {
-              display: SHOW_GRID,
-              drawBorder: true,
-              drawOnChartArea: true,
-
-              lineWidth: 5
-            },
-            ticks: {
-              callback: function(value, index, values) {
-                // return POINT_Y_PREFIX + value.toLocaleString() + POINT_Y_POSTFIX;
-                return ;
-              }
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: Y_AXIS
+          },
+          gridLines: {
+            display: true,
+            drawBorder: true,
+            drawOnChartArea: true,
+            lineWidth: 0
+          },
+          ticks: {
+            callback: function(value, index, values) {
+              // return POINT_Y_PREFIX + value.toLocaleString() + POINT_Y_POSTFIX;
+              return ;
             }
-          }]
-        },
-        tooltips: {
+          }
+        }]},    
+    tooltips: {
           displayColors: false,
           callbacks: {
             title: function(tooltipItem, all) {
@@ -206,11 +230,9 @@ $('#contacts').submit(function(e){
           }
         }
       }
-
     });
 
     mychart.render()
-    // mychart.destroy()
 
     function titleCase(str) {
       str = str.toLowerCase();
@@ -221,8 +243,6 @@ $('#contacts').submit(function(e){
       return str.join(' ');
     }
     
-
-
   var parsed = "Article URLS:"+"\n";
 
   $('#target').empty().append('<p style="color:grey; font-size:20px"><b>Article Links:<b></p>')
@@ -231,48 +251,15 @@ $('#contacts').submit(function(e){
       var myobj=  urls_list[i];
       myobj = myobj.replace(/\/$/, "");
       var myheadline=  titleCase(head_list[i])
-    //   var pubcolour = datasetdata[i].backgroundColor
-    //   console.log(pubcolour)
-    //   #ffffa0
-    // colourlist 
-    var pubcolour = colourlist[publishers_list[i]]
-    console.log(pubcolour)
-    console.log(publishers_list[i])
-    // $('#target').append('<a  href='+myobj+ ' style="color:pubcolour">'+myheadline+' </a>'+"<br>"+"<br>")
-    // $('#target').append('<a  href='+myobj+ ' style="background-color:pubcolour">'+myheadline+' </a>'+"<br>"+"<br>")
-    $('#target').append('<a  href='+myobj+ ' style="color:'+pubcolour+'">'+myheadline+' </a>'+"<br>"+"<br>")
-    // $('#target').append('<a  href='+myobj+ ' style="background-color:'+pubcolour+'">'+myheadline+' </a>'+"<br>"+"<br>")
-
+        var pubcolour = colourlist[publishers_list[i]]
+        console.log(pubcolour)
+        console.log(publishers_list[i])
+        $('#target').append('<a  href='+myobj+ ' style="color:'+pubcolour+'">'+myheadline+' </a>'+"<br>"+"<br>")
+        // $('#target').append('<a  href='+myobj+ ' style="background-color:'+pubcolour+'">'+myheadline+' </a>'+"<br>"+"<br>")
 }    
-
 } 
-
-  
   );
-  
   })
 })
-
-  
 });
-
-
-
-
-
-
 })
-
-// var resetCanvas = function(){
-//   $('container').remove(); // this is my <canvas> element
-//   $('graph-container').append('<canvas id="container"><canvas>');
-//   canvas = document.querySelector('container');
-//   // ctx = canvas.getContext('2d');
-//   // ctx.canvas.width = $('#graph').width(); // resize to parent width
-//   // ctx.canvas.height = $('#graph').height(); // resize to parent height
-//   // var x = canvas.width/2;
-//   // var y = canvas.height/2;
-//   // ctx.font = '10pt Verdana';
-//   // ctx.textAlign = 'center';
-//   // ctx.fillText('This text is centered on the canvas', x, y);
-// };
